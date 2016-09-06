@@ -244,7 +244,7 @@ class Hand:
                1     4
                   H
                 2   3
-            Something like this. It's a pentagram, OK? We're CS majors, not artists.
+            Something like this. It's a pentagon, OK? We're CS majors, not artists.
         :return: A string of the form s,p,tmp,tx1,tx2,tx3,tx4, where:
 
             • s - the sensor’s code
@@ -605,6 +605,6 @@ class Agent:
         """
         if ',' in text:
             text = text.replace(',', '')
-        send("say,{speaker},{text},{duration},{posX},{posY}".format(speaker=speaker, text=text, duration=duration,
+        send("say,{speaker},{text},{duration},{posX},{posY}\n".format(speaker=speaker, text=text, duration=duration,
                                                                     posX=pos_x, posY=pos_y),
              self.client_socket, return_response=True)
