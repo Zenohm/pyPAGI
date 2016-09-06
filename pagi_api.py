@@ -19,9 +19,16 @@ def connect_socket(ip_address=None, port=42209):
         # Connect to local address.
         ip_address = socket.gethostbyname(socket.gethostname())
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect((ip_address, port))
-    client_socket.setblocking(0)
-    return client_socket
+    try:
+        client_socket.connect((ip_address, port))
+        client_socket.setblocking(0)
+        return client_socket
+    except ConnectionRefusedError:
+        print("The provided address and port refused the connection.")
+        print("Check the address and port to make sure they're valid.")
+        print("If all else fails, restart PAGI World, especially if you've "
+              "switched networks since you last started it.")
+        sys.exit(1)
 
 
 def close_client(client_socket):
@@ -606,5 +613,5 @@ class Agent:
         if ',' in text:
             text = text.replace(',', '')
         send("say,{speaker},{text},{duration},{posX},{posY}\n".format(speaker=speaker, text=text, duration=duration,
-                                                                    posX=pos_x, posY=pos_y),
+                                                                      posX=pos_x, posY=pos_y),
              self.client_socket, return_response=True)
